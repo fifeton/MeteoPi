@@ -21,8 +21,12 @@ class MeteoPi:
 		GPIO.cleanup()
 	
 		self.TMP = dht11.DHT11(pin = self.PINS['DHT'])
-		self.BAR = BMP085.BMP085()
-		
+		try:
+			self.BAR = BMP085.BMP085()
+		except:
+			print("Error inicializando BMP085")
+			self.BAR=None
+
 		print("Inicializado")
 
 
@@ -33,15 +37,15 @@ class MeteoPi:
 			self.DATA['temperatura']=result.temperature
 			self.DATA['humedad']=result.humidity
 			
-		
-		self.DATA['presion']=self.BAR.read_pressure()
-		self.DATA['altitud']=self.BAR.read_altitude()
-		self.DATA['presion_mar']=self.BAR.read_sealevel_pressure()
+		if self.BAR:
+			self.DATA['presion']=self.BAR.read_pressure()
+			self.DATA['altitud']=self.BAR.read_altitude()
+			self.DATA['presion_mar']=self.BAR.read_sealevel_pressure()
 		self.DATA['fecha']=str(datetime.datetime.now())
 
 
 	def postData(self):
-		req = urllib2.Request('http://127.0.0.1:8001/meteopi/update.html')
+		req = urllib2.Request('http://192.168.0.201:8001/meteopi/update')
 		req.add_header('Content-Type', 'application/json')
 
 		jsd=json.dumps(self.DATA)
