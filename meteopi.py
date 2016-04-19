@@ -19,10 +19,7 @@ class MeteoPi:
 
 		self.DATA={'temperatura':0,'humedad':0,'presion':0}
 
-		# initialize GPIO
-		GPIO.setwarnings(False)
-		GPIO.setmode(GPIO.BCM)
-		GPIO.cleanup()
+		
 	
 		self.TMP = dht11.DHT11(pin = self.PINS['DHT'])
 		try:
@@ -69,30 +66,25 @@ data = {
 }
 
 
+try:
+	GPIO.cleanup()
+	# initialize GPIO
+	GPIO.setwarnings(False)
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setup(13,GPIO.OUT)
+	GPIO.output(13,True)
+	
+	mp=MeteoPi()
+	
+	mp.update()
+	mp.postData()
+	
+	now = datetime.datetime.now()
+	
+	lcd_i2c.lcd_init()
+	lcd_i2c.lcd_string(str(mp.DATA["temperatura"])+"C "+str(mp.DATA["presion"])+" mb", lcd_i2c.LCD_LINE_2)
+	lcd_i2c.lcd_string(str(mp.DATA["humedad"])+"% "+now.strftime("%H:%M"), lcd_i2c.LCD_LINE_1)
 
-
-
-
-mp=MeteoPi()
-
-mp.update()
-'''
-print("Last valid input: " + str(datetime.datetime.now()))
-print("Temperature: %d C" % mp.DATA['temperatura'])
-print("Humidity: %d %%" % mp.DATA['humedad'])
-
-
-print('Pressure = %0.2f Pa' % mp.DATA['presion'])
-print('Altitude = %0.2f m' % mp.DATA['altitud'])
-print('Sealevel Pressure = %0.2f Pa' % mp.DATA['presion_mar'])
-print(" ")
-print("=====================================")
-'''
-mp.postData()
-
-now = datetime.datetime.now()
-
-lcd_i2c.lcd_init()
-lcd_i2c.lcd_string(str(mp.DATA["temperatura"])+"C "+str(mp.DATA["presion"])+" mb", lcd_i2c.LCD_LINE_2)
-lcd_i2c.lcd_string(str(mp.DATA["humedad"])+"% "+now.strftime("%H:%M"), lcd_i2c.LCD_LINE_1)
-
+finally:
+	GPIO.output(13,False)
+	
