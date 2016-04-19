@@ -1,17 +1,21 @@
+#!/usr/bin/env python
 
+import datetime
+import json
+import sys
+import time
+import urllib2
+
+import Adafruit_BMP.BMP085 as BMP085
 import RPi.GPIO as GPIO
 import dht11
-import time
-import datetime
-import Adafruit_BMP.BMP085 as BMP085
+import lcd_i2c
 
-import json
-import urllib2
 
 class MeteoPi:
 	def __init__(self):
 		print("Inicializando...")
-		self.PINS={'DHT':4}
+		self.PINS={'DHT':26}
 
 		self.DATA={'temperatura':0,'humedad':0,'presion':0}
 
@@ -25,6 +29,7 @@ class MeteoPi:
 			self.BAR = BMP085.BMP085()
 		except:
 			print("Error inicializando BMP085")
+			
 			self.BAR=None
 
 		print("Inicializado")
@@ -41,6 +46,7 @@ class MeteoPi:
 			self.DATA['presion']=self.BAR.read_pressure()
 			self.DATA['altitud']=self.BAR.read_altitude()
 			self.DATA['presion_mar']=self.BAR.read_sealevel_pressure()
+			self.DATA['temperatura']=self.BAR.read_temperature()
 		self.DATA['fecha']=str(datetime.datetime.now())
 
 
@@ -83,3 +89,10 @@ print(" ")
 print("=====================================")
 '''
 mp.postData()
+
+now = datetime.datetime.now()
+
+lcd_i2c.lcd_init()
+lcd_i2c.lcd_string(str(mp.DATA["temperatura"])+"C "+str(mp.DATA["presion"])+" mb", lcd_i2c.LCD_LINE_2)
+lcd_i2c.lcd_string(str(mp.DATA["humedad"])+"% "+now.strftime("%H:%M"), lcd_i2c.LCD_LINE_1)
+

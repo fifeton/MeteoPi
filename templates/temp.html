@@ -1,0 +1,77 @@
+$def with (data)
+
+
+<!doctype html>
+<html>
+	<head>
+        <title>Meteopi</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="/static/lib/jquery-1.6.4.js"></script>
+        <script src="/static/lib/jquery.mobile-1.1.0.js"></script>
+        <link href="/static/src/css/jquery.mobile.structure-1.1.0.css" rel="stylesheet"
+        />
+        <link href="/static/src/css/jquery.mobile.theme-1.1.0.css" rel="stylesheet" />
+    </head>
+    
+	<script src="/static/Chart.min.js"></script>
+	<body>
+		<h1>Temperatura</h1>
+		
+		<div data-role="page" id="temperatura" data-title="Meteopi::Temperatura" >
+            <div data-role="header">
+                <h1>Temperatura</h1>
+            </div>
+            <div data-role="content">
+                <div class="div-widget" id="chart">
+                
+    				<canvas id="canvas" height="450" width="600"></canvas>
+                
+                </div>
+                <div data-role="controlgroup" id="temp_btn_group" data-type="horizontal">
+                    <a data-role="button" id="btn_temp_volver" href="index.html">Volver</a>
+                </div>
+            </div>
+            <div data-role="footer">
+                <h1>Meteopi</h1>
+            </div>
+        </div>
+		
+				
+		
+
+
+	<script>
+	
+		var server_data=$:{data};
+	
+	
+		
+		var lineChartData = {
+			labels : server_data["labels"],
+			datasets : [
+				{
+					label: "Temperaturas",
+					fillColor : "rgba(220,220,220,0.2)",
+					strokeColor : "rgba(220,220,220,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : server_data["data"]["temperatura"]
+				}			
+			]
+			
+
+		}
+
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myLine = new Chart(ctx).Line(lineChartData, {
+			responsive: true
+		});
+	}
+
+
+	</script>
+	</body>
+</html>

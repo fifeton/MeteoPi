@@ -1,1 +1,1 @@
-c:\python\python27\python.exe server.py
+c:\python\python27\python.exe meteoPiServer.py > metepi.log

@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
 	<head>
-		<title>MeteoPi</title>
+		<title>Meteopi</title>
 		<script src="/Chart.min.js"></script>
 	</head>
 	<body>
-		<h1>Temperatura</h1>
+		<h1>Humedad</h1>
 		<div style="width:60%">
 			<div>
 				<canvas id="canvas" height="450" width="600"></canvas>
@@ -23,7 +23,7 @@
 			labels : server_data["labels"],
 			datasets : [
 				{
-					label: "Temperaturas",
+					label: "% humedad",
 					fillColor : "rgba(220,220,220,0.2)",
 					strokeColor : "rgba(220,220,220,1)",
 					pointColor : "rgba(220,220,220,1)",

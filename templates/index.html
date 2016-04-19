@@ -1,0 +1,81 @@
+$def with (data)
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    
+    <head>
+        <title>Meteopi</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="/static/lib/jquery-1.6.4.js"></script>
+        <script src="/static/lib/jquery.mobile-1.1.0.js"></script>
+        <link href="/static/src/css/jquery.mobile.structure-1.1.0.css" rel="stylesheet"
+        />
+        <link href="/static/src/css/jquery.mobile.theme-1.1.0.css" rel="stylesheet" />
+    </head>
+    
+	<script src="/static/Chart.min.js"></script>
+    <body>
+        <div data-role="page" id="Index" data-title="Meteopi">
+            <div data-role="header">
+                <h1>Meteopi</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="controlgroup" id="index_btn_group">
+                <a data-role="button" id="btn_temp" href="all.html" data-rel="page"  target="meteopi_data">Todo</a>
+                    <a data-role="button" id="btn_temp" href="temp.html" data-rel="page"  target="meteopi_data">Temperatura</a>
+                    <a data-role="button" id="btn_pres" href="presion.html" target="meteopi_data">Presi&oacute;n</a>
+                    <a data-role="button" id="btn_hum" href="hum.html" target="meteopi_data">Humedad</a>
+                </div>
+            </div>
+            <div data-role="footer">
+                <h1>Meteopi</h1>
+            </div>
+        </div>
+        <div data-role="page" id="temperatura" data-title="Meteopi::Temperatura" >
+            <div data-role="header">
+                <h1>Temperatura</h1>
+            </div>
+            <div data-role="content">
+                <div class="div-widget" id="chart">
+                
+    
+                
+                </div>
+                <div data-role="controlgroup" id="temp_btn_group" data-type="horizontal">
+                    <a data-role="button" id="btn_temp_volver">Volver</a>
+                </div>
+            </div>
+            <div data-role="footer">
+                <h1>Meteopi</h1>
+            </div>
+        </div>
+        <div data-role="page" id="humedad" data-title="Meteopi::Humedad">
+            <div data-role="header">
+                <h1>Meteopi::Humedad</h1>
+            </div>
+            <div data-role="content">
+                <div class="div-widget"></div>
+                <div data-role="controlgroup" data-type="horizontal">
+                    <a data-role="button">Volver</a>
+                </div>
+            </div>
+            <div data-role="footer">
+                <h1>Meteopi</h1>
+            </div>
+        </div>
+        <div data-role="page" id="presion" data-title="Meteopi::presi&oacute;n">
+            <div data-role="header">
+                <h1>Meteopi::Presi&oacute;n</h1>
+            </div>
+            <div data-role="content">
+                <div class="div-widget"></div>
+                <div data-role="controlgroup" data-type="horizontal">
+                    <a data-role="button">Volver</a>
+                </div>
+            </div>
+            <div data-role="footer">
+                <h1>Meteopi</h1>
+            </div>
+        </div>
+    </body>
+
+</html>
