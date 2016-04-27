@@ -56,11 +56,11 @@ class index:
         return render.temp(json.dumps(getData()))
 
 class update:
-    def POST(self):
-        data = web.data()
+    def GET(self):
+        user_data = web.input()		
     
-        data = json.loads(data.decode())
-                
+        data = {"temperatura":user_data.temp,"humedad":user_data.hum,"presion":user_data.pres,"fecha":str(datetime.datetime.now())}
+
         fn=getDataFile()
         
         f=open(fn,"a")
@@ -72,7 +72,7 @@ class update:
             f.close()
             
         return "OK"
-            
+
 def getDataFile():
     dd = datetime.datetime.now()
         
