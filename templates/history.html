@@ -1,0 +1,39 @@
+$def with (data)
+
+
+<!doctype html>
+<html>
+	<head>
+        <title>Meteopi</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="/static/lib/jquery-1.6.4.js"></script>
+        <script src="/static/lib/jquery.mobile-1.1.0.js"></script>
+        <link href="/static/src/css/jquery.mobile.structure-1.1.0.css" rel="stylesheet"
+        />
+        <link href="/static/src/css/jquery.mobile.theme-1.1.0.css" rel="stylesheet" />
+    </head>
+    
+	
+	<body>
+		<div data-role="page" id="historico" data-title="Meteopi::Hist&oacute;" >
+            <div data-role="header">
+                <h1>Hist&oacute;rico</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="controlgroup" id="index_btn_group">
+                
+                $for f in data: 
+                	<a data-role="button" id="btn_${f}" href="all.html?file=${f}" data-rel="page"  target="meteopi_data">${f}</a>
+                    
+                </div>
+                <div data-role="controlgroup" id="temp_btn_group" data-type="horizontal">
+                    <a data-role="button" id="btn_temp_volver" href="index.html">Volver</a>
+                </div>
+            </div>
+            
+            <div data-role="footer">
+                <h1>Meteopi</h1>
+            </div>
+        </div>
+	</body>
+</html>

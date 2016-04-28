@@ -16,12 +16,13 @@ class MeteoPiApp(web.application):
 urls=(
     '/', 'index',
     '/meteopi/update',"update",
+    '/meteopi/history',"history",
     '/meteopi/.+',"meteopi"
 )
 
-def getData(date=None):
+def getData(fName=None):
     
-    fn=getDataFile()
+    fn=getDataFile(fName)
     
     res={"labels":[],"data":{"temperatura":[],"humedad":[],"presion":[]}}
     
@@ -41,17 +42,24 @@ def getData(date=None):
     
     return res
 
+class history:
+    def GET(self):
+        render = web.template.frender('templates/history.html')
+        return render(os.listdir(getLogDir()))
+    
 class meteopi:
     def GET(self):
-        
+        user_data = web.input()
         render = web.template.frender('templates'+web.ctx.path.replace('/meteopi',''))
-        return render(json.dumps(getData()))
         
-
-
+        fName=None
+        if user_data:
+            fName=user_data['file']
+        
+        return render(json.dumps(getData(fName)))
+                      
 class index:
     def GET(self):
-        
         render = web.template.render('templates')
         return render.temp(json.dumps(getData()))
 
@@ -73,19 +81,31 @@ class update:
             
         return "OK"
 
-def getDataFile():
-    dd = datetime.datetime.now()
-        
-    dn = "logs"
+def getLogDir():
+    dn= "logs"
+    
     if not os.path.exists(dn):
         os.mkdir(dn)
+        
+    return dn
+
+def getDataFile(fName=None):
     
-    fn= dn+"/meteopi."+str(dd.year)+"."+str(dd.month)+"."+str(dd.day)+".data"
+    dn = getLogDir()
+    
+        
+    if not fName:
+        date=datetime.datetime.now()
+        fn= dn+"/meteopi."+str(date.year)+"."+str(date.month)+"."+str(date.day)+".data" 
+    else:
+        fn= dn+"/"+fName
+    
+    
     
     return fn
     
 if __name__ == "__main__":
-    web.config.debug=False
+    web.config.debug=True
     
     f = open('meteopi.out', 'w')
     sys.stdout = f
