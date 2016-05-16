@@ -24,7 +24,7 @@ def getData(fName=None):
     
     fn=getDataFile(fName)
     
-    res={"labels":[],"data":{"temperatura":[],"humedad":[],"presion":[]}}
+    res={"labels":[],"data":{"temperatura":[],"humedad":[],"presion":[],"lluvia":[],"bateria":[]}}
     
     if os.path.exists(fn):
         f=open(fn,"r")
@@ -34,9 +34,10 @@ def getData(fName=None):
                 if len(line.strip())>0:
                     row = json.loads(line.strip())
                     res["labels"].append(row["fecha"][11:-10])
-                    res["data"]["temperatura"].append(row["temperatura"])
-                    res["data"]["humedad"].append(row["humedad"])
-                    res["data"]["presion"].append(row["presion"])
+                    
+                    for key in row:
+                        if key!="fecha":
+                            res["data"][key].append(row[key])
         finally:    
             f.close()
     
@@ -45,7 +46,8 @@ def getData(fName=None):
 class history:
     def GET(self):
         render = web.template.frender('templates/history.html')
-        return render(os.listdir(getLogDir()))
+        
+        return render(sorted(os.listdir(getLogDir()),reverse=True))
     
 class meteopi:
     def GET(self):
@@ -65,9 +67,16 @@ class index:
 
 class update:
     def GET(self):
-        user_data = web.input()		
+        user_data = web.input()	
     
-        data = {"temperatura":user_data.temp,"humedad":user_data.hum,"presion":user_data.pres,"fecha":str(datetime.datetime.now())}
+    
+        fecha=user_data.get("date")
+        if not fecha:
+            fecha=str(datetime.datetime.now())
+    
+    
+            
+        data = {"temperatura":user_data.get("temp"),"humedad":user_data.get("hum"),"presion":user_data.get("pres"),"fecha":fecha,"lluvia":user_data.get("rain"),"bateria":user_data.get("bateria")}
 
         fn=getDataFile()
         
@@ -96,6 +105,8 @@ def getDataFile(fName=None):
         
     if not fName:
         date=datetime.datetime.now()
+        
+        
         fn= dn+"/meteopi."+str(date.year)+"."+str(date.month)+"."+str(date.day)+".data" 
     else:
         fn= dn+"/"+fName
@@ -113,5 +124,12 @@ if __name__ == "__main__":
     f = open('meteopi.err', 'w')
     sys.stderr = f
     
+    
+    
+    
     app = MeteoPiApp(urls, globals())
     app.run()
+    
+    
+    
+    

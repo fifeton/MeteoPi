@@ -15,9 +15,9 @@ $def with (data)
     
 	<script src="/static/Chart.min.js"></script>
 	<body>
-		<div data-role="page" id="presion" data-title="Meteopi::Presi&oactue;n" >
+		<div data-role="page" id="lluvia" data-title="Meteopi::Lluvia" >
             <div data-role="header">
-                <h1>Presi&oacute;n</h1>
+                <h1>Lluvia</h1>
             </div>
             <div data-role="content">
                 <div class="div-widget" id="chart">
@@ -45,14 +45,14 @@ $def with (data)
 			labels : server_data["labels"],
 			datasets : [
 				{
-					label: "Temperaturas",
+					label: "Lluvia",
 					fillColor : "rgba(220,220,220,0.2)",
 					strokeColor : "rgba(220,220,220,1)",
 					pointColor : "rgba(220,220,220,1)",
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(220,220,220,1)",
-					data : server_data["data"]["presion"]
+					data : server_data["data"]["lluvia"]
 				}			
 			]
 
