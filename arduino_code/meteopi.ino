@@ -12,7 +12,7 @@
 #define TARGET_HOST "192.168.0.201"
 #define TARGET_PORT "8001"
 #define SID "fifeton"
-#define PWD "segeretiseger"
+#define PWD ""
 #define SLEEP_TIME 300000
 
 
