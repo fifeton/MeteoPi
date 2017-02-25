@@ -24,7 +24,7 @@ def getData(fName=None):
     
     fn=getDataFile(fName)
     
-    res={"labels":[],"data":{"temperatura":[],"humedad":[],"presion":[],"lluvia":[],"bateria":[]}}
+    res={"labels":[],"data":{"temperatura":[],"humedad":[],"presion":[],"lluvia":[],"bateria":[],"red":[]}}
     
     if os.path.exists(fn):
         f=open(fn,"r")
@@ -76,7 +76,7 @@ class update:
     
     
             
-        data = {"temperatura":user_data.get("temp"),"humedad":user_data.get("hum"),"presion":user_data.get("pres"),"fecha":fecha,"lluvia":user_data.get("rain"),"bateria":user_data.get("bateria")}
+        data = {"temperatura":user_data.get("temp"),"humedad":user_data.get("hum"),"presion":user_data.get("pres"),"fecha":fecha,"lluvia":user_data.get("rain"),"bateria":user_data.get("bateria"),"red":user_data.get("red")}
 
         fn=getDataFile()
         
